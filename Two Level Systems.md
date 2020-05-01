@@ -159,3 +159,46 @@ $$
 + |c_{2_i}|^2|c_{2_f}|^2 
 + c_{1_i}c_{1_f}c^*_{2_i}c^*_{2_f}e^{-i(\lambda_1 - \lambda_2)t} + \mathrm{h.c.}
 $$
+
+## General State Evolution
+
+Starting with the initial state:
+
+$$
+|\psi(0)\rangle = |\theta_0,\phi_0\rangle = \cos\frac{\theta_0}{2}|1\rangle + e^{i\phi_0}\sin\frac{\theta_0}{2}|0\rangle
+$$
+
+The evolution of the state under the application of the general Hamiltonian $H = \vec{\sigma}\cdot\vec{r}$ will become:
+
+$$
+|\psi(t)\rangle = |\Theta(t), \Phi(t)\rangle = \cos\frac{\Theta(t)}{2}|1\rangle + e^{i\Phi(t)}\sin\frac{\Theta(t)}{2}|0\rangle
+$$
+
+Where $\Theta(t) = \Theta(\theta, \phi; \theta_0, \phi_0; t)$ and $\Phi(t) = \Phi(\theta,\phi;\theta_0,\phi_0; t)$ are functions of the:
+
+- $\theta$: polar angle of $\vec{r}$
+- $\phi$: azimuthal angle of $\vec{r}$
+- $\theta_0$: initial state polar angle
+- $\phi_0$: initial state azimuthal angle
+
+The explicit expression is given by:
+
+$$
+\boxed{
+\cos\frac{\Theta(t)}{2} 
+= 
+i\sin(rt)\sin(\theta)\sin\frac{\theta_0}{2}e^{i(\phi_0 - \phi)} 
++ \left[\cos(rt) - i\sin(rt)\cos(\theta)\right]\cos\frac{\theta_0}{2} 
+}
+$$
+
+$$
+\boxed{
+e^{i\Phi(t)}\sin\frac{\Theta(t)}{2} 
+= 
+-e^{i\phi_0}\left[i\sin(rt)\sin(\theta)\cos\frac{\theta_0}{2}e^{-i(\phi_0 - \phi)} + \sin\frac{\theta_0}{2}\left[\cos(rt) + i\sin(rt)\cos\theta\right]\right]
+}
+$$
+
+With these formula, we can take any input state, any Hamiltonian, and any time evolution duration, and compute the final state. 
+**This is the general solution to all possible manipulations of a qubit in a pure state**.
