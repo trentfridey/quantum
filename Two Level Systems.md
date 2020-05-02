@@ -196,7 +196,7 @@ $$
 \boxed{
 e^{i\Phi(t)}\sin\frac{\Theta(t)}{2} 
 = 
--e^{i\phi_0}\left[i\sin(rt)\sin(\theta)\cos\frac{\theta_0}{2}e^{-i(\phi_0 - \phi)} + \sin\frac{\theta_0}{2}\left[\cos(rt) + i\sin(rt)\cos\theta\right]\right]
+-e^{i\phi_0}\left[i\sin(rt)\sin(\theta)\cos\frac{\theta_0}{2}e^{-i(\phi_0 - \phi)} + \left[\cos(rt) + i\sin(rt)\cos\theta\right]\sin\frac{\theta_0}{2}\right]
 }
 $$
 
