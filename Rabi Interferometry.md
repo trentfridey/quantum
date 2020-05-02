@@ -1,6 +1,6 @@
 # Rabi Interferometry
 
-## Mathematical Preliminaries
+## Summary
 
 $$
 H = \sigma_0r_0+ \vec{\sigma}\cdot\vec{r}
@@ -154,3 +154,46 @@ $$
 =
 -\left(\frac{\Delta-\omega}{2}\right)\sigma_z + \omega_1\sigma_x
 $$
+
+Now we can use the [general evolution formula](Two%20Level%20Systems.md) to compute the final state:
+
+$$
+r = \sqrt{\omega_1^2 + \frac{1}{4}(\Delta - \omega)^2}\\
+\tan\theta = \left(\frac{2\omega_1}{\Delta - \omega}\right)\\
+\phi = \arctan(0) = 0
+$$
+
+$$
+\theta_0 = \pi, \, \phi_0 = 0
+$$
+
+$$
+|\Phi(t)\rangle = 
+i\sin(rt)\sin(\theta)|\tilde{1}\rangle
+-
+\left[\cos(rt) + i\sin(rt)\cos\theta\right]|\tilde{0}\rangle
+$$
+
+Where 
+
+$$
+\sin\theta = \frac{\omega_1}{r}, \, \cos\theta = \frac{\Delta-\omega}{2r}
+$$
+
+And to transform back to the laboratory frame:
+
+$$
+|\tilde1\rangle = e^{-i\omega t}|1\rangle \\
+|\tilde 0\rangle = e^{i\omega t}|0\rangle
+$$
+
+So that the final solution is:
+
+$$
+|\Psi(t)\rangle = 
+i\sin(rt)\sin(\theta)e^{-i\omega t}|1\rangle
++
+\left[\cos(rt) + i\sin(rt)\cos\theta\right]e^{i\omega t}|0\rangle
+$$
+
+Note that when $\Delta = \omega$, $P_{0\to 1}(t) = \sin^2rt$
