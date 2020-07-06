@@ -1,0 +1,319 @@
+---
+title: "Two Level Systems"
+author: "Trent Fridey"
+output: "pdf_document"
+---
+
+\newcommand{\ket}[1]{\left|#1\right \rangle}
+\newcommand{\bra}[1]{\left\langle #1 \right|}
+\newcommand{\avg}[1]{\left\langle #1 \right\rangle}
+\newcommand{\upket}{\ket{\uparrow}}
+\newcommand{\downket}{\ket{\downarrow}}
+\newcommand{\upbra}{\bra{\uparrow}}
+\newcommand{\downbra}{\bra{\downarrow}}
+\newcommand{\sx}{\hat{\sigma}_x}
+\newcommand{\sy}{\hat{\sigma}_y}
+\newcommand{\sz}{\hat{\sigma}_z}
+\newcommand{\sxm}{\left(
+    \begin{matrix}
+        0 & 1 \\
+        1 & 0
+    \end{matrix}
+\right)}
+\newcommand{\sym}{\left(
+    \begin{matrix}
+        0 & -i \\
+        i & 0
+    \end{matrix}
+\right)}
+\newcommand{\szm}{\left(
+    \begin{matrix}
+        1 & 0 \\
+        0 & -1
+    \end{matrix}
+\right)}
+
+
+
+## Preliminaries
+
+### General state
+
+$$
+\left(
+    \begin{matrix}
+    a \\
+    b
+    \end{matrix}
+\right)
+ = a\upket + b\downket  
+$$
+
+$|a|^2 + |b|^2 = 1$
+
+
+### Pauli Matrices
+
+$$
+\sx = \sxm
+$$
+
+$$
+\sy = \sym
+$$
+
+$$
+\sz = \szm
+$$
+
+$$
+\sigma_0 = \left(
+    \begin{matrix}
+        1 & 0 \\
+        0 & 1
+    \end{matrix}
+\right)
+$$
+
+### Bloch Vector
+
+With $\vec{\sigma} = \sx\hat{x} + \sy\hat{y} + \sz\hat{z}$
+
+
+$$
+\vec{n} = \avg{\vec{\sigma}} = \avg{\sx} \hat{x} + \avg{\sy} \hat{y}+ \avg{\sz} \hat{z}
+$$
+
+### Bloch sphere
+
+```{python, echo=FALSE}
+from qutip import *
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(0.5,0.5))
+b = Bloch()
+b.axesinstance = ax
+b.zlabel = [r'$|\uparrow\rangle$', r'$|\downarrow\rangle$']
+b.make_sphere()
+plt.show()
+```
+
+# Unitary Evolution with Pure States
+
+## General Unitary Hamiltonian
+
+If we constrain ourselves to unitary evolution, we can parameterize the general Hamiltonian for a two-level system in terms of a Bloch vector $\vec{r}$
+
+$$
+\vec{r} = r\cos\phi\sin\theta\hat{x} + r\sin\phi\sin\theta\hat{y} + r\cos\theta\hat{z}
+$$
+
+So that the general Hamiltonian is:
+
+$$
+H = \sigma_0r_0+ \vec{\sigma}\cdot\vec{r}
+$$
+
+
+
+$$
+H = \left(
+    \begin{matrix}
+        r_0 + r\cos\theta & re^{-i\phi}\sin\theta \\
+        re^{i\phi}\sin\theta & r_0 - r\cos\theta
+    \end{matrix}
+\right)
+$$
+
+### Eigenvalues
+
+$$\lambda_{1,2} = r_0 \pm r$$
+
+### Eigenvectors
+
+$$
+|\lambda_1\rangle = 
+\left(\begin{matrix}
+    \cos\frac{\theta}{2}\\
+    e^{i\phi}\sin\frac{\theta}{2}
+\end{matrix}\right)
+= \cos\frac{\theta}{2}\upket + e^{i\phi}\sin\frac{\theta}{2}\downket 
+$$
+
+$$
+|\lambda_2\rangle =
+\left(\begin{matrix}
+    e^{i\phi}\sin\frac{\theta}{2}\\
+    -\cos\frac{\theta}{2}
+\end{matrix}\right)
+= e^{i\phi}\sin\frac{\theta}{2}\upket -\cos\frac{\theta}{2}\downket
+$$
+
+### Eigenbasis
+
+$$
+\Lambda = 
+\left(
+    \begin{matrix}
+    |\lambda_1\rangle & |\lambda_2\rangle
+    \end{matrix}
+\right)
+=
+\left(
+    \begin{matrix}
+    \upbra \lambda_1 \rangle & \upbra\lambda_2\rangle \\
+    \downbra \lambda_1 \rangle & \downbra\lambda_2\rangle
+    \end{matrix}
+\right)
+=
+\left(
+    \begin{matrix}
+    \cos\frac{\theta}{2} & e^{i\phi}\sin\frac{\theta}{2} \\
+    e^{i\phi}\sin\frac{\theta}{2} & -\cos\frac{\theta}{2}
+    \end{matrix}
+\right)
+$$
+
+$$
+\Lambda^{\dagger} = \left(
+    \begin{matrix}
+    \langle \lambda_1 \upket & \langle \lambda_1\downket \\
+    \langle \lambda_2 \upket & \langle \lambda_2\downket
+    \end{matrix}
+\right)
+=
+\left(
+    \begin{matrix}
+    \cos\frac{\theta}{2} & e^{-i\phi}\sin\frac{\theta}{2} \\
+    e^{-i\phi}\sin\frac{\theta}{2} & -\cos\frac{\theta}{2}
+    \end{matrix}
+\right)
+$$
+
+$$
+\det(\Lambda) = -e^{i\phi}\left(e^{-i\phi}\cos^2\frac{\theta}{2} + e^{i\phi}\sin^2\frac{\theta}{2}\right)
+$$
+
+### Time Evolution
+
+$U(t) = e^{-iHt}$
+
+$U^\dagger(t) U(t) =1$
+
+$$
+|\psi (t)\rangle = e^{-iHt}|\psi(0)\rangle = \sum_{k=1}^2 e^{-i\lambda_k t}|\lambda_k\rangle\langle \lambda_k | \psi(0)\rangle =  \sum_{k=1}^2 c_k e^{-i\lambda_k t}|\lambda_k\rangle
+$$
+
+$$
+c_k = \langle\lambda_k|\psi(0)\rangle
+$$
+
+#### Matrix Elements
+
+$$
+\langle j |e^{-iHt} | k \rangle
+=
+\sum_{\ell}^2 e^{-i\lambda_\ell t}\langle j|\lambda_\ell\rangle\langle \lambda_\ell | k\rangle
+$$
+
+$$
+U = \Lambda
+\left(\begin{matrix}
+e^{-i\lambda_1 t}
+&
+0
+\\
+0
+&
+e^{-i\lambda_2 t}
+\end{matrix}\right)
+\Lambda^{\dagger}
+$$
+
+$$
+U_{jk}(t) = \sum_{\ell}e^{i\lambda_\ell t}\Lambda_{j\ell}\Lambda^{\dagger}_{\ell k}
+$$
+
+
+$$
+U = 
+\left[
+    \begin{matrix}
+    \cos^2\frac{\theta}{2}e^{-i\lambda_1 t} + \sin^2\frac{\theta}{2}e^{-i\lambda_2 t}
+    &
+    \frac{1}{2}\sin\theta(e^{-i\phi} e^{-i\lambda_1 t} - e^{i\phi} e^{-i\lambda_2 t})
+    \\
+    \frac{1}{2}\sin\theta(e^{i\phi} e^{-i\lambda_1 t} - e^{-i\phi} e^{-i\lambda_2 t})
+    &
+    \sin^2\frac{\theta}{2}e^{-i\lambda_1 t} + \cos^2\frac{\theta}{2}e^{-i\lambda_2 t}
+    \end{matrix}
+\right]
+$$
+
+#### Transition Matrix
+
+$$
+P_{i\to f}(t) = |U_{jk}|^2(t)
+$$
+
+
+## General State Evolution
+
+Starting with the initial state:
+
+$$
+|\psi(0)\rangle = |\theta_0,\phi_0\rangle = \cos\frac{\theta_0}{2}\upket + e^{i\phi_0}\sin\frac{\theta_0}{2}\downket
+$$
+
+The evolution of the state under the application of the general Hamiltonian $H = \vec{\sigma}\cdot\vec{r}$ will become:
+
+$$
+|\psi(t)\rangle = a(t)\upket + b(t)\downket
+$$
+
+The explicit expression is given by:
+
+$$
+a(t)
+= 
+i\sin(rt)\sin(\theta)\sin\frac{\theta_0}{2}e^{i(\phi_0 - \phi)} 
++ \left[\cos(rt) - i\sin(rt)\cos(\theta)\right]\cos\frac{\theta_0}{2} 
+$$
+
+$$
+b(t)
+= 
+e^{i\phi_0}\left[i\sin(rt)\sin(\theta)\cos\frac{\theta_0}{2}e^{-i(\phi_0 - \phi)} + \left[\cos(rt) + i\sin(rt)\cos\theta\right]\sin\frac{\theta_0}{2}\right]
+$$
+
+We can rewrite this to make the coefficients more amenable to the Bloch sphere interpretation:
+
+$$
+|\psi(t)\rangle = |\Theta(t), \Phi(t)\rangle = \cos\frac{\Theta(t)}{2}\upket + e^{i\Phi(t)}\sin\frac{\Theta(t)}{2}\downket
+$$
+
+where $\Theta(t) = \Theta(\theta, \phi; \theta_0, \phi_0; t)$ and $\Phi(t) = \Phi(\theta,\phi;\theta_0,\phi_0; t)$ are functions of the:
+
+- $\theta$: polar angle of $\vec{r}$
+- $\phi$: azimuthal angle of $\vec{r}$
+- $\theta_0$: initial state polar angle
+- $\phi_0$: initial state azimuthal angle
+
+TODO
+
+## General Bloch Vector Evolution
+
+Starting with the initial Bloch vector:
+
+$$
+\vec{n}_0 = \langle \sigma_x(0) \rangle \hat{x} + \langle \sigma_y(0) \rangle \hat{y}+ \langle \sigma_z(0) \rangle \hat{z}
+\\
+=\cos\phi_0\sin\theta_0\hat{x} + \sin\phi_0\sin\theta_0\hat{y} + \cos\theta_0\hat{z}
+$$
+
+The Bloch vector will evolve under the General Hamiltonian to:
+
+$$
+\vec{n}(t) = \langle \sigma_x(t) \rangle \hat{x} + \langle \sigma_y(t) \rangle \hat{y}+ \langle \sigma_z(t) \rangle \hat{z}
+\\
+=\cos\Phi(t)\sin\Theta(t)\hat{x} + \sin\Phi(t)\sin\Theta(t)\hat{y} + \cos\Theta(t)\hat{z}
+$$
